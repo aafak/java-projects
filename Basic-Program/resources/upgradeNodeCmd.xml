@@ -1,0 +1,459 @@
+<?xml version="1.0"?>
+<commands>
+
+	<upgradeBackup>
+		<command>
+			<cmd>mkdir /upgrade_config_backup</cmd>
+			<server>node</server>
+			<sequence>1</sequence>
+			<description>Creating a new dir to keep backup files</description>
+		</command>
+			
+		<command>
+			<cmd>/usr/local/bin/rsync -az /cbdir/buildversion /upgrade_config_backup/</cmd>
+			<server>node</server>
+			<sequence>2</sequence>
+			<description>Taking backup of buildversion from /cbdir </description>
+		</command>
+			
+		<command>
+			<cmd>/usr/local/bin/rsync -az /etc/rc.conf /upgrade_config_backup/rc.conf_old</cmd>
+			<server>node</server>
+			<sequence>3</sequence>
+			<description>Taking backup of rc.conf from /etc </description>
+		</command>	
+		
+		<command>
+			<cmd>usr/local/bin/rsync -az /boot/device.hints /upgrade_config_backup/</cmd>
+			<server>node</server>
+			<sequence>4</sequence>
+			<description>Taking backup of device.hints from /boot</description>
+	  </command>
+			
+		<command>
+			<cmd>/usr/local/bin/rsync -az /etc /upgrade_config_backup/</cmd>
+			<server>node</server>
+			<sequence>5</sequence>
+			<description>Taking backup of etc dir from /etc</description>
+		</command>
+			
+		<command>
+			<cmd>/usr/local/bin/rsync -az /var/log /upgrade_config_backup/</cmd>
+			<server>node</server>
+			<sequence>6</sequence>
+			<description>Taking backup of controller logs from /var/log </description>
+		</command>	
+		
+		<command>
+			<cmd>/usr/local/cb /upgrade_config_backup/</cmd>
+			<server>node</server>
+			<sequence>7</sequence>
+			<description>Taking back of cb directory from /usr/local</description>
+		</command>
+			
+		<command>
+			<cmd>/usr/local/bin/rsync -az /cf /upgrade_config_backup/</cmd>
+			<server>node</server>
+			<sequence>8</sequence>
+			<description>Taking back of cf(all config.xml) from /cf </description>
+		</command>
+			
+		<command>
+			<cmd>/usr/local/bin/rsync -az /usr/local/agent/listener/cbc.conf /upgrade_config_backup/</cmd>
+			<server>node</server>
+			<sequence>9</sequence>
+			<description>Taking back of cbc.conf from /usr/local/agent/listener/ </description>
+		</command>	
+		 
+		<command>
+			<cmd>/usr/local/bin/rsync -az /usr/local/agent/cbc_node_id /upgrade_config_backup/</cmd>
+			<server>node</server>
+			<sequence>10</sequence>
+			<description>Taking back of cbc_node_id from /usr/local/agent/</description>
+		</command>
+		
+		<command>
+			<cmd>/usr/local/bin/rsync -az /usr/local/agent/cbd_node_id /upgrade_config_backup/</cmd>
+			<server>node</server>
+			<sequence>11</sequence>
+			<description>Taking back of cbd_node_id from /usr/local/agent/</description>
+		</command>	
+			
+		<command>
+			<cmd>/usr/local/bin/rsync -az /usr/local/etc/my.cnf /upgrade_config_backup/</cmd>
+			<server>node</server>
+			<sequence>12</sequence>
+			<description>Taking back of my.cnf from /usr/local/etc/</description>
+		</command>	
+			
+		<command>
+			<cmd>mkdir /upgradetmp</cmd>
+			<server>node</server>
+			<sequence>13</sequence>
+			<description>Creating a temprary dir to keep the required files to upgrade node</description>
+		</command>				
+	</upgradeBackup>
+
+	<sendRequiredArchives>
+		<command>
+			<cmd>mkdir /upgradenodetmp</cmd>
+			<server>devman</server>
+			<sequence>1</sequence>
+			<description>Creating a temp director to keep base and kernal</description>
+		</command>
+
+		<command>
+			<cmd>/usr/local/bin/rsync -avz /base/base.txz /upgradenodetmp/base.txz</cmd>
+			<server>devman</server>
+			<sequence>2</sequence>
+			<description>Copying base.txz to temp dir from /base </description>
+		</command>
+		
+		<command>
+			<cmd>/usr/local/bin/rsync -avz /kernel/kernel.txz /upgradenodetmp/kernel.txz</cmd>
+			<server>devman</server>
+			<sequence>3</sequence>
+			<description>Copying kernal.txz to temp dir from /kernal </description>
+		</command>		
+			
+		<command>
+			<cmd>rm -rf /cbdir</cmd>
+			<server>node</server>
+			<sequence>4</sequence>
+			<description>Removing existing /cbdir directory from Node</description>
+		</command>		
+	</sendRequiredArchives>
+
+	<upgradeCbdir>
+		<command>
+			<cmd>/usr/local/bin/rsync -avz  /upgrade_config_backup/buildversion /cbdir/</cmd>
+			<server>node</server>
+			<sequence>1</sequence>
+			<description>Copying buildversion to new /cbdir from backed up directory created on Node</description>
+		</command>		
+	</upgradeCbdir>
+
+	<pushPythonPkgs>
+		<command>
+			<cmd>/usr/bin/tar -xjf /cbdir/site-packages.tbz -C /cbdir/</cmd>
+			<server>node</server>
+			<sequence>1</sequence>
+			<description>Extracting site-pacakages from new /cbdir </description>
+		</command>
+			
+		<command>
+			<cmd>/usr/local/bin/rsync -avz /cbdir/site-packages/ /usr/local/lib/python2.7/site-packages/</cmd>
+			<server>node</server>
+			<sequence>2</sequence>
+			<description>Copying site-pacakages from new /cbdir to python library </description>
+		</command>
+	</pushPythonPkgs>
+
+	<upgradeAgent>
+		<command>
+			<cmd>cp /cbdir/cloudbyte-*/cbc.zip /upgradetmp/</cmd>
+			<server>node</server>
+			<sequence>1</sequence>
+			<description>Copying cbc.zip from /cbdir to temp dir</description>
+		</command>
+			
+		<command>
+			<cmd>unzip /upgradetmp/cbc.zip</cmd>
+			<server>node</server>
+			<sequence>2</sequence>
+			<description>Unziping cbc.zip inside temp dir</description>
+		</command>
+			
+		<command>
+			<cmd>mv cbc /upgradetmp/</cmd>
+			<server>node</server>
+			<sequence>3</sequence>
+			<description>.....check </description>
+	  </command>	
+		 	
+	  <command>
+			<cmd>/usr/local/bin/rsync -avz /upgradetmp/cbc/ /usr/local/agent/</cmd>
+			<server>node</server>
+			<sequence>4</sequence>
+			<description>Copying new content of cbc dir to /usr/local/agent/</description>
+	  </command>
+			
+		<command>
+			<cmd>rm -rf /upgradetmp/cbc /upgradetmp/cbc.zip</cmd>
+			<server>node</server>
+			<sequence>5</sequence>
+			<description>Removing cbc.zip and cbc dir from temp dir</description>
+		</command>
+			
+		<command>
+			<cmd>/usr/local/bin/rsync -avz /upgrade_config_backup/cbc_node_id /usr/local/agent/cbc_node_id</cmd>
+			<server>node</server>
+			<sequence>6</sequence>
+			<description>Restoring the cbc_node_id from upgrade_config_backup dir to /usr/local/agent/</description>
+		</command>	
+		
+		<command>
+			<cmd>/usr/local/bin/rsync -avz /upgrade_config_backup/cbd_node_id /usr/local/agent/cbd_node_id</cmd>
+			<server>node</server>
+			<sequence>7</sequence>
+			<description>Restoring the cbd_node_id from upgrade_config_backup dir to /usr/local/agent/</description>
+		</command>	
+		
+		<command>
+			<cmd>/usr/local/bin/rsync /upgrade_config_backup/cbc.conf /usr/local/agent/listener/</cmd>
+			<server>node</server>
+			<sequence>8</sequence>
+			<description>Restoring the cbc.conf from upgrade_config_backup dir to /usr/local/agent/listener/</description>
+		</command>
+	</upgradeAgent>
+
+	<upgradeTenants>
+		<command>
+			<cmd>/sbin/zfs destroy -R tpool/mytenants/tenantbase@tenanttemplate</cmd>
+			<server>node</server>
+			<sequence>1</sequence>
+			<description>Destroy Old Snapshot</description>
+		</command>
+			
+		<command>
+			<cmd>/sbin/zfs destroy -R tpool/mytenants/tenantbase</cmd>
+			<server>node</server>
+			<sequence>2</sequence>
+			<description>Destroy old tenantbase dir </description>
+		</command>
+			
+		<command>
+			<cmd>/sbin/zfs create tpool/mytenants/tenantbase</cmd>
+			<server>node</server>
+			<sequence>3</sequence>
+			<description>Creating new tenant base </description>
+	  </command>	
+		 	
+	  <command>
+			<cmd>mkdir -p /tpool/mytenants/tenantbase/cbdir/packages</cmd>
+			<server>node</server>
+			<sequence>4</sequence>
+			<description>Creating package directory</description>
+	  </command>
+			
+		<command>
+			<cmd>mkdir -p /tpool/mytenants/tenantbase/usr/local/cb</cmd>
+			<server>node</server>
+			<sequence>5</sequence>
+			<description>Creating cb dir in tenant</description>
+		</command>
+			
+		<command>
+			<cmd>mkdir -p /tpool/mytenants/tenantbase/usr/local/cb/etc</cmd>
+			<server>node</server>
+			<sequence>6</sequence>
+			<description>Creating etc in tenant </description>
+		</command>	
+		
+		<command>
+			<cmd>mkdir -p /tpool/mytenants/tenantbase/usr/local/cb/bin</cmd>
+			<server>node</server>
+			<sequence>7</sequence>
+			<description>Creating bin in tenant</description>
+		</command>
+			
+		<command>
+			<cmd>mkdir /upgradenodetmp/base</cmd>
+			<server>node</server>
+			<sequence>8</sequence>
+			<description>creating a temp base to copy the extracted files from base.txz </description>
+		</command>
+			
+		<command>
+			<cmd>/usr/bin/tar -xjf /upgradenodetmp/base.txz -C /upgradenodetmp/base/</cmd>
+			<server>node</server>
+			<sequence>9</sequence>
+			<description>Extracting base and copying to temp dir</description>
+		</command>	
+		 
+		<command>
+			<cmd>/usr/local/bin/rsync -az /upgradenodetmp/base/ /tpool/mytenants/tenantbase/</cmd>
+			<server>node</server>
+			<sequence>10</sequence>
+			<description>Copying new base to tenant</description>
+		</command>
+		
+		<command>
+			<cmd>/usr/local/bin/rsync -az /cbdir/packages/ /tpool/mytenants/tenantbase/cbdir/packages/</cmd>
+			<server>node</server>
+			<sequence>11</sequence>
+			<description>Syncing new packages into tenant packages</description>
+		</command>	
+			
+		<command>
+			<cmd>/usr/local/bin/rsync -az /cbdir/install_base_packages.sh /tpool/mytenants/tenantbase/</cmd>
+			<server>node</server>
+			<sequence>12</sequence>
+			<description>copying new install_base_packages.sh</description>
+		</command>				
+
+		<command>
+			<cmd>chroot /tpool/mytenants/tenantbase /install_base_packages.sh</cmd>
+			<server>node</server>
+			<sequence>13</sequence>
+			<description>Installing new packeges</description>
+		</command>
+			
+		<command>
+			<cmd>/usr/local/bin/rsync -az /cbdir/cb_scripts/bin/ /tpool/mytenants/tenantbase/usr/local/cb/bin/</cmd>
+			<server>node</server>
+			<sequence>14</sequence>
+			<description>syncing bin to /usr/local/cb/bin/ </description>
+		</command>
+			
+		<command>
+			<cmd>rm -rf /tpool/mytenants/tenantbase/cbdir</cmd>
+			<server>node</server>
+			<sequence>15</sequence>
+			<description>Removing cbdir from tenantbase after installing packages</description>
+	  </command>	
+		 	
+	  <command>
+			<cmd>rm -rf /tpool/mytenants/tenantbase/etc/rc.d/sendmail</cmd>
+			<server>node</server>
+			<sequence>16</sequence>
+			<description>Removing sendmail from tenant</description>
+	  </command>
+			
+		<command>
+			<cmd>echo "tenantbase" >/usr/local/cb/etc/tenantbase</cmd>
+			<server>node</server>
+			<sequence>17</sequence>
+			<description>Touching file /usr/local/cb/etc/tenantbase</description>
+		</command>
+			
+		<command>
+			<cmd>mkdir -p /tpool/mytenants/tenantbase/usr/local/lib/python2.7/site-packages</cmd>
+			<server>node</server>
+			<sequence>18</sequence>
+			<description>Creating dir for site-packages</description>
+		</command>	
+		
+		<command>
+			<cmd>/usr/local/bin/rsync /usr/local/lib/python2.7/site-packages/ /tpool/mytenants/tenantbase/usr/local/lib/python2.7/site-packages/</cmd>
+			<server>node</server>
+			<sequence>19</sequence>
+			<description>Syncing new site-packages in tenant</description>
+		</command>
+			
+		<command>
+			<cmd>mkdir -p /tpool/mytenants/tenantbase/usr/local/agent</cmd>
+			<server>node</server>
+			<sequence>20</sequence>
+			<description>Creating /usr/local/agent/ in tenant</description>
+		</command>
+			
+		<command>
+			<cmd>/usr/local/bin/rsync /usr/local/agent/ /tpool/mytenants/tenantbase/usr/local/agent/</cmd>
+			<server>node</server>
+			<sequence>21</sequence>
+			<description>Syncing new /usr/local/agent/ in tenant</description>
+		</command>	
+		 
+		<command>
+			<cmd>/sbin/zfs snapshot tpool/mytenants/tenantbase@tenanttemplate</cmd>
+			<server>node</server>
+			<sequence>22</sequence>
+			<description>Re-creating Snapshot of tenantbase</description>
+		</command>
+	</upgradeTenants>
+
+	<upgradeKernel>
+		<command>
+			<cmd>tar -xjf /upgradenodetmp/kernel.txz -C /upgradetmp/</cmd>
+			<server>node</server>
+			<sequence>1</sequence>
+			<description>Untaring kernel.txz</description>
+		</command>
+			
+		<command>
+			<cmd>/usr/local/bin/rsync -avz /upgradetmp/boot/ /boot/</cmd>
+			<server>node</server>
+			<sequence>2</sequence>
+			<description>Syncing new kernel </description>
+		</command>
+	</upgradeKernel>
+
+	<upgradebase>
+		<command>
+			<cmd>chflags -R noschg /bin/* /lib/* /libexec/* /sbin/* /usr/bin/* /usr/lib/*</cmd>
+			<server>node</server>
+			<sequence>1</sequence>
+			<description>Changing flags of immutable files to make them changable</description>
+		</command>
+			
+		<command>
+			<cmd>/usr/local/bin/rsync -az /upgradenodetmp/base/ /</cmd>
+			<server>node</server>
+			<sequence>2</sequence>
+			<description>Syncing new Base </description>
+		</command>
+	</upgradebase>
+
+	<restoreBackup1>
+		<command>
+			<cmd>/usr/local/bin/rsync -az /upgrade_config_backup/etc/ /etc/</cmd>
+			<server>node</server>
+			<sequence>1</sequence>
+			<description>Restoring /etc</description>
+		</command>
+			
+		<command>
+			<cmd>/usr/local/bin/rsync -az /upgrade_config_backup/log /var/</cmd>
+			<server>node</server>
+			<sequence>2</sequence>
+			<description>Restoring /var/log </description>
+		</command>
+			
+		<command>
+			<cmd>/usr/local/bin/rsync -az /upgrade_config_backup/cb /usr/local/</cmd>
+			<server>node</server>
+			<sequence>3</sequence>
+			<description>Restoring /usr/local/cb</description>
+		</command>		
+	</restoreBackup1>
+
+	<upgradeCbguifiles>
+		<command>
+			<cmd>mkdir -p /upgradetmp/cbguifiles</cmd>
+			<server>node</server>
+			<sequence>1</sequence>
+			<description>creating /upgradetmp/cbguifiles folder </description>
+		</command>
+		
+		<command>
+			<cmd>tar -xjf /cbdir/cbguifiles.tar.gz -C /upgradetmp/cbguifiles/</cmd>
+			<server>node</server>
+			<sequence>2</sequence>
+			<description>Extract and copy the /cbdir/cbguifiles.tar.gz files to /upgradetmp/cbguifiles </description>
+		</command>
+		
+		<command>
+			<cmd>/usr/local/bin/rsync -az /upgradetmp/cbguifiles/ /</cmd>
+			<server>node</server>
+			<sequence>3</sequence>
+			<description>syncing new cbguifiles</description>
+		</command>		
+	</upgradeCbguifiles>
+	 
+	<restoreBackup2>
+		<command>
+			<cmd>/usr/local/bin/rsync -az /upgrade_config_backup/device.hints /boot/</cmd>
+			<server>node</server>
+			<sequence>1</sequence>
+			<description>Restoring device.hints</description>
+		</command>
+		<command>
+			<cmd>/usr/local/bin/rsync -az /upgrade_config_backup/my.cnf /usr/local/etc/</cmd>
+			<server>node</server>
+			<sequence>2</sequence>
+			<description>Restoring my.cnf </description>
+		</command>
+	</restoreBackup2>
+
+</commands>

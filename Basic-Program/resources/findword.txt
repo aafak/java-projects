@@ -1,0 +1,5 @@
+aafak 23 SE 100000
+aman  24 SSE 200000
+aakash 28 TL 300000
+aafak2 26 SSE 40000
+aman2  26  SE 40000
