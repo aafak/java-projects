@@ -1,0 +1,6 @@
+1.create a java project named as Cloud in eclipse
+2.create a new folder lib under Cloud
+3.Copy all required jars into lib
+4.To add jars into classpath, right click on jar file and select build path->add to build path
+5.Create a META-INF folder under src
+6.create a persistence.xml under META-INF, and defined all DB details
