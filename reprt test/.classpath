@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/root/Desktop/reports/mysql-connector-java-5.1.21/mysql-connector-java-5.1.21-bin.jar"/>
+	<classpathentry kind="lib" path="/root/Desktop/reports/cloud-jasperreports-4.6.0.jar"/>
+	<classpathentry kind="lib" path="/root/Desktop/reports/jasperreports-4.7.0/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/root/Desktop/reports/jasperreports-4.7.0/lib/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="/root/Desktop/reports/jasperreports-4.7.0/lib/commons-collections-2.1.1.jar"/>
+	<classpathentry kind="lib" path="/root/Desktop/reports/jasperreports-4.7.0/lib/commons-beanutils-1.8.0.jar"/>
+	<classpathentry kind="lib" path="/root/Desktop/reports/jasperreports-4.7.0/lib/groovy-all-1.7.5.jar"/>
+	<classpathentry kind="lib" path="/root/Desktop/reports/jasperreports-4.7.0/lib/jackson-core-asl-1.9.4.jar"/>
+	<classpathentry kind="lib" path="/root/Desktop/reports/jasperreports-4.7.0/lib/jackson-mapper-asl-1.9.4.jar"/>
+	<classpathentry kind="lib" path="/root/Desktop/reports/jasperreports-4.7.0/lib/iText-2.1.7.jar"/>
+	<classpathentry kind="lib" path="/root/Desktop/reports/jasperreports-4.6.0/lib/jfreechart-1.0.12.jar"/>
+	<classpathentry kind="lib" path="/root/Desktop/reports/jasperreports-4.6.0/lib/jcommon-1.0.15.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TSM_QOS_barchart" language="groovy" columnCount="2" pageWidth="595" pageHeight="842" columnWidth="270" columnSpacing="15" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="from" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="to" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="site_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     cb_monitor_site_qos.`id` AS cb_monitor_site_qos_id,
+     cb_monitor_site_qos.`uuid` AS cb_monitor_site_qos_uuid,
+     cb_monitor_site_qos.`site_id` AS cb_monitor_site_qos_site_id,
+     cb_monitor_site_qos.`ios` AS cb_monitor_site_qos_ios,
+     cb_monitor_site_qos.`ios_total` AS cb_monitor_site_qos_ios_total,
+     cb_monitor_site_qos.`throughput` AS cb_monitor_site_qos_throughput,
+     cb_monitor_site_qos.`throughput_total` AS cb_monitor_site_qos_throughput_total,
+     cb_monitor_site_qos.`latency` AS cb_monitor_site_qos_latency,
+     cb_monitor_site_qos.`throttle` AS cb_monitor_site_qos_throttle,
+     cb_monitor_site_qos.`timestamp` AS cb_monitor_site_qos_timestamp,
+     cb_site.`id` AS cb_site_id,
+     cb_site.`name` AS cb_site_name
+FROM
+     `cb_site` cb_site INNER JOIN `cb_monitor_site_qos` cb_monitor_site_qos ON cb_site.`id` = cb_monitor_site_qos.`site_id` where
+cb_monitor_site_qos.site_id=$P{site_id} and
+cb_monitor_site_qos.timestamp>=$P{from} and cb_monitor_site_qos.timestamp<=$P{to}]]>
+	</queryString>
+	<field name="cb_monitor_site_qos_id" class="java.math.BigInteger"/>
+	<field name="cb_monitor_site_qos_uuid" class="java.lang.String"/>
+	<field name="cb_monitor_site_qos_site_id" class="java.math.BigInteger"/>
+	<field name="cb_monitor_site_qos_ios" class="java.math.BigInteger"/>
+	<field name="cb_monitor_site_qos_ios_total" class="java.math.BigInteger"/>
+	<field name="cb_monitor_site_qos_throughput" class="java.math.BigInteger"/>
+	<field name="cb_monitor_site_qos_throughput_total" class="java.math.BigInteger"/>
+	<field name="cb_monitor_site_qos_latency" class="java.lang.Long"/>
+	<field name="cb_monitor_site_qos_throttle" class="java.lang.Long"/>
+	<field name="cb_monitor_site_qos_timestamp" class="java.sql.Timestamp"/>
+	<field name="cb_site_id" class="java.math.BigInteger"/>
+	<field name="cb_site_name" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="69" splitType="Stretch">
+			<staticText>
+				<reportElement x="201" y="0" width="213" height="20" forecolor="#3333FF"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monitor QOS For Site]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="49" width="93" height="20" forecolor="#330033"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Site Name:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="294" y="49" width="100" height="20" forecolor="#660066"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cb_site_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="26">
+			<rectangle>
+				<reportElement x="0" y="0" width="266" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="216" y="0" width="64" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Latency]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="0" width="76" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Throughput]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="91" y="0" width="41" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[IOPS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="145" y="0" width="56" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Throttle]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="1" y="0" width="66" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cb_monitor_site_qos_throughput}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="88" y="0" width="44" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cb_monitor_site_qos_ios_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="145" y="0" width="56" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cb_monitor_site_qos_throttle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="216" y="0" width="41" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cb_monitor_site_qos_latency}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="320" splitType="Stretch">
+			<bar3DChart>
+				<chart>
+					<reportElement x="26" y="42" width="529" height="278"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["IOPS"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{cb_monitor_site_qos_timestamp}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{cb_monitor_site_qos_ios}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Throughput"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{cb_monitor_site_qos_timestamp}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{cb_monitor_site_qos_throughput}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Throttle"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{cb_monitor_site_qos_timestamp}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{cb_monitor_site_qos_throttle}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Latency"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{cb_monitor_site_qos_timestamp}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{cb_monitor_site_qos_latency}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel/>
+				</bar3DPlot>
+			</bar3DChart>
+			<staticText>
+				<reportElement x="188" y="22" width="159" height="20" forecolor="#3333FF"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bar Chart for QOS]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
