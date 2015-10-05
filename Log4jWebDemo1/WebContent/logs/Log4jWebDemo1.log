@@ -1,0 +1,13 @@
+INFO    2015-08-29 22:07:51,265 ["http-bio-9080"-exec-4] net.codejava.servlet.TestLog4jServlet  - This is a logging statement from log4j
+INFO    2015-08-29 22:07:53,932 ["http-bio-9080"-exec-5] net.codejava.servlet.TestLog4jServlet  - This is a logging statement from log4j
+INFO    2015-08-29 22:07:54,011 ["http-bio-9080"-exec-6] net.codejava.servlet.TestLog4jServlet  - This is a logging statement from log4j
+INFO    2015-08-29 22:07:54,231 ["http-bio-9080"-exec-7] net.codejava.servlet.TestLog4jServlet  - This is a logging statement from log4j
+INFO    2015-08-29 22:07:54,309 ["http-bio-9080"-exec-8] net.codejava.servlet.TestLog4jServlet  - This is a logging statement from log4j
+INFO    2015-08-29 22:07:54,543 ["http-bio-9080"-exec-9] net.codejava.servlet.TestLog4jServlet  - This is a logging statement from log4j
+INFO    2015-08-29 22:07:54,621 ["http-bio-9080"-exec-10] net.codejava.servlet.TestLog4jServlet  - This is a logging statement from log4j
+INFO    2015-08-29 22:07:54,873 ["http-bio-9080"-exec-10] net.codejava.servlet.TestLog4jServlet  - This is a logging statement from log4j
+INFO    2015-08-29 22:07:54,951 ["http-bio-9080"-exec-10] net.codejava.servlet.TestLog4jServlet  - This is a logging statement from log4j
+INFO    2015-08-29 22:07:55,202 ["http-bio-9080"-exec-10] net.codejava.servlet.TestLog4jServlet  - This is a logging statement from log4j
+INFO    2015-08-29 22:07:55,280 ["http-bio-9080"-exec-10] net.codejava.servlet.TestLog4jServlet  - This is a logging statement from log4j
+INFO    2015-08-29 22:07:55,532 ["http-bio-9080"-exec-10] net.codejava.servlet.TestLog4jServlet  - This is a logging statement from log4j
+INFO    2015-08-29 22:07:55,610 ["http-bio-9080"-exec-10] net.codejava.servlet.TestLog4jServlet  - This is a logging statement from log4j
